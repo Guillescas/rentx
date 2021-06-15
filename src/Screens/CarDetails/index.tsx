@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { BackButton } from '../../components/BackButton';
 import { CarAccessory } from '../../components/CarAccessory';
@@ -15,14 +16,12 @@ import PeopleSvg from '../../assets/people.svg';
 import * as S from './styles';
 
 export const CarDetails = (): ReactElement => {
+  const navigation = useNavigation();
+
   return (
     <S.Container>
       <S.Header>
-        <BackButton
-          onPress={() => {
-            console.log('a');
-          }}
-        />
+        <BackButton onPress={() => navigation.goBack()} />
       </S.Header>
 
       <S.CardImages>
@@ -61,7 +60,10 @@ export const CarDetails = (): ReactElement => {
       </S.Content>
 
       <S.Footer>
-        <Button title="Confirmar" onPress={() => console.log('aoba')} />
+        <Button
+          title="Escolher período do aluguel"
+          onPress={() => navigation.navigate('Scheduling')}
+        />
       </S.Footer>
     </S.Container>
   );

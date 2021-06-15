@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../components/BackButton';
@@ -19,16 +20,13 @@ import PeopleSvg from '../../assets/people.svg';
 import * as S from './styles';
 
 export const SchedulingDetails = (): ReactElement => {
+  const navigation = useNavigation();
   const theme = useTheme();
 
   return (
     <S.Container>
       <S.Header>
-        <BackButton
-          onPress={() => {
-            console.log('a');
-          }}
-        />
+        <BackButton onPress={() => navigation.goBack()} />
       </S.Header>
 
       <S.CardImages>
@@ -97,7 +95,11 @@ export const SchedulingDetails = (): ReactElement => {
       </S.Content>
 
       <S.Footer>
-        <Button title="Confirmar" onPress={() => console.log('aoba')} />
+        <Button
+          title="Alugar agora"
+          color={theme.colors.success}
+          onPress={() => navigation.navigate('CompleteScheduling')}
+        />
       </S.Footer>
     </S.Container>
   );

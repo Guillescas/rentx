@@ -1,6 +1,8 @@
 import React, { ReactElement } from 'react';
-import { useTheme } from 'styled-components';
 import { StatusBar } from 'react-native';
+
+import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components';
 
 import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
@@ -11,6 +13,7 @@ import LeftArrowSvg from '../../assets/arrow.svg';
 import * as S from './styles';
 
 export const Scheduling = (): ReactElement => {
+  const navigation = useNavigation();
   const theme = useTheme();
 
   return (
@@ -24,9 +27,7 @@ export const Scheduling = (): ReactElement => {
       <S.Header>
         <BackButton
           color={theme.colors.shape}
-          onPress={() => {
-            console.log('a');
-          }}
+          onPress={() => navigation.goBack()}
         />
 
         <S.Title>
@@ -55,7 +56,10 @@ export const Scheduling = (): ReactElement => {
       </S.Content>
 
       <S.Footer>
-        <Button title="Confirmar" onPress={() => console.log('aaa')} />
+        <Button
+          title="Confirmar"
+          onPress={() => navigation.navigate('SchedulingDetails')}
+        />
       </S.Footer>
     </S.Container>
   );
