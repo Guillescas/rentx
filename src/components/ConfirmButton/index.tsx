@@ -7,9 +7,12 @@ interface IConfirmButtonProps extends RectButtonProps {
   title: string;
 }
 
-export const ConfirmButton = ({ title }: IConfirmButtonProps): ReactElement => {
+export const ConfirmButton = ({
+  title,
+  ...rest
+}: IConfirmButtonProps): ReactElement => {
   return (
-    <S.Container>
+    <S.Container {...rest}>
       <S.Title>{title}</S.Title>
     </S.Container>
   );

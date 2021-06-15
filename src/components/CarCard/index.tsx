@@ -1,26 +1,19 @@
 import React, { ReactElement } from 'react';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import GasolineSvg from '../../assets/gasoline.svg';
 
+import { ICarDTO } from '../../dtos/CarDTO';
+
 import * as S from './styles';
 
-interface ICardData {
-  brand: string;
-  name: string;
-  rent: {
-    period: string;
-    price: number;
-  };
-  imageUrl: string;
+interface ICarCardProps extends RectButtonProps {
+  data: ICarDTO;
 }
 
-interface ICarCardProps {
-  data: ICardData;
-}
-
-export const CarCard = ({ data }: ICarCardProps): ReactElement => {
+export const CarCard = ({ data, ...rest }: ICarCardProps): ReactElement => {
   return (
-    <S.Container>
+    <S.Container {...rest}>
       <S.Details>
         <S.Brand>{data.brand}</S.Brand>
         <S.Name>{data.name}</S.Name>
@@ -39,7 +32,7 @@ export const CarCard = ({ data }: ICarCardProps): ReactElement => {
 
       <S.CardImage
         source={{
-          uri: data.imageUrl,
+          uri: data.thumbnail,
         }}
         resizeMode="contain"
       />
