@@ -14,7 +14,7 @@ export default {
     main: '#DC1637',
     main_light: '#FDEDEF',
 
-    success: '#03B2252',
+    success: '#03B225',
 
     shape: '#E1E1E8',
     shape_dark: '#29292E',
