@@ -83,7 +83,6 @@ export const Scheduling = (): ReactElement => {
     });
   };
 
-  console.log(car);
   const handleSubmitRentalDate = () => {
     if (!rentalPeriod.dayOfStart || !rentalPeriod.dayOfEnd) {
       Alert.alert('Selecione alguma data para alugar o veículo.');
