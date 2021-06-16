@@ -1,18 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactElement, useEffect, useState } from 'react';
-
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import Logo from '../../assets/logo.svg';
 
 import { CarCard } from '../../components/CarCard';
+import { Loading } from '../../components/Loading';
 
 import api from '../../services/api';
+
 import { ICarDTO } from '../../dtos/CarDTO';
 
 import * as S from './styles';
-import { Loading } from '../../components/Loading';
 
 export const Home = (): ReactElement => {
   const navigation = useNavigation();
@@ -32,6 +32,10 @@ export const Home = (): ReactElement => {
       });
   }, []);
 
+  const handleClickOnCarCard = (car: ICarDTO) => {
+    navigation.navigate('CarDetails', { car });
+  };
+
   return (
     <S.Container>
       <StatusBar
@@ -42,7 +46,7 @@ export const Home = (): ReactElement => {
       <S.Header>
         <S.HeaderContent>
           <Logo width={RFValue(108)} height={RFValue(12)} />
-          <S.TotalCars>Total de 12 carros</S.TotalCars>
+          <S.TotalCars>Total de {cars.length} carros</S.TotalCars>
         </S.HeaderContent>
       </S.Header>
 
@@ -53,10 +57,7 @@ export const Home = (): ReactElement => {
           data={cars}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <CarCard
-              data={item}
-              onPress={() => navigation.navigate('CarDetails')}
-            />
+            <CarCard data={item} onPress={() => handleClickOnCarCard(item)} />
           )}
         />
       )}
