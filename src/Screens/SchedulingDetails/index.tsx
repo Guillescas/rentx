@@ -36,6 +36,8 @@ export const SchedulingDetails = (): ReactElement => {
   const theme = useTheme();
   const route = useRoute();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [rentalPeriod, setRentalPeriod] = useState<IRentalPeriodProps>(
     {} as IRentalPeriodProps,
   );
@@ -55,12 +57,26 @@ export const SchedulingDetails = (): ReactElement => {
   }, [dates]);
 
   const handleFinishScheduling = async () => {
+    setIsLoading(true);
+
     const schedulesByCar = await api.get(`/schedules_bycars/${car.id}`);
 
     const unvailableDates = [
       ...schedulesByCar.data.unavailable_dates,
       ...dates,
     ];
+
+    api
+      .put(`/schedules_byuser`, {
+        user_id: 1,
+        car,
+        startDate: format(getPlatformDate(new Date(dates[0])), 'dd/MM/yyy'),
+        endDate: format(
+          getPlatformDate(new Date(dates[dates.length - 1])),
+          'dd/MM/yyy',
+        ),
+      })
+      .catch(() => Alert.alert('Algo deu errado. Tente novamente mais tarde.'));
 
     api
       .put(`/schedules_bycars/${car.id}`, {
@@ -70,7 +86,10 @@ export const SchedulingDetails = (): ReactElement => {
       .then(() => {
         navigation.navigate('CompleteScheduling');
       })
-      .catch(() => Alert.alert('Algo deu errado. Tente novamente mais tarde.'));
+      .catch(() => {
+        setIsLoading(false);
+        Alert.alert('Algo deu errado. Tente novamente mais tarde.');
+      });
   };
 
   return (
@@ -146,6 +165,8 @@ export const SchedulingDetails = (): ReactElement => {
           title="Alugar agora"
           color={theme.colors.success}
           onPress={handleFinishScheduling}
+          enabled={!isLoading}
+          isLoading={isLoading}
         />
       </S.Footer>
     </S.Container>

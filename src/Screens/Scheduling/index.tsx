@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { StatusBar, Alert } from 'react-native';
+import { StatusBar } from 'react-native';
 import { format } from 'date-fns';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
@@ -83,17 +83,6 @@ export const Scheduling = (): ReactElement => {
     });
   };
 
-  const handleSubmitRentalDate = () => {
-    if (!rentalPeriod.dayOfStart || !rentalPeriod.dayOfEnd) {
-      Alert.alert('Selecione alguma data para alugar o veículo.');
-    } else {
-      navigation.navigate('SchedulingDetails', {
-        car,
-        dates: Object.keys(markedDates),
-      });
-    }
-  };
-
   return (
     <S.Container>
       <StatusBar
@@ -138,7 +127,16 @@ export const Scheduling = (): ReactElement => {
       </S.Content>
 
       <S.Footer>
-        <Button title="Confirmar" onPress={handleSubmitRentalDate} />
+        <Button
+          title="Confirmar"
+          onPress={() =>
+            navigation.navigate('SchedulingDetails', {
+              car,
+              dates: Object.keys(markedDates),
+            })
+          }
+          enabled={!!rentalPeriod.formattedDayOfStart}
+        />
       </S.Footer>
     </S.Container>
   );
