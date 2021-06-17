@@ -1,7 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactElement, useEffect, useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
 
 import Logo from '../../assets/logo.svg';
 
@@ -16,6 +18,7 @@ import * as S from './styles';
 
 export const Home = (): ReactElement => {
   const navigation = useNavigation();
+  const theme = useTheme();
 
   const [isLoading, setIsLoading] = useState(true);
   const [cars, setCars] = useState<ICarDTO[]>([]);
@@ -61,6 +64,10 @@ export const Home = (): ReactElement => {
           )}
         />
       )}
+
+      <S.MyCarsButton onPress={() => navigation.navigate('MyCars')}>
+        <Ionicons name="ios-car-sport" size={32} color={theme.colors.shape} />
+      </S.MyCarsButton>
     </S.Container>
   );
 };
